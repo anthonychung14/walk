@@ -9,24 +9,44 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
+  NavigatorIOS,
+  TouchableHighlight
 } from 'react-native';
 
-class Walk extends Component {
+import Something from './components/Something';
+import Component2 from './components/Component2';
+import Walk from './components/walk/Walk';
+
+class App extends Component {
+  onRightButtonPress = () => {
+      this.refs.nav.push({
+        title: 'From Right',
+        component: Something
+      });
+  };
+
+  onLeftButtonPress = () => {
+    this.refs.nav.push({
+      title: 'From Left',
+      component: Component2
+    });
+  };
+
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
-      </View>
+      <NavigatorIOS
+        ref="nav"
+        initialRoute={{
+          component: Walk,
+          title: 'Go Home!',
+          leftButtonTitle: 'Go Left',
+          onLeftButtonPress: this.onLeftButtonPress,
+          rightButtonTitle: 'Go Right',
+          onRightButtonPress: this.onRightButtonPress
+        }}
+        style={ { flex: 1 } }
+      />
     );
   }
 }
@@ -50,4 +70,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('Walk', () => Walk);
+AppRegistry.registerComponent('Walk', () => App);
