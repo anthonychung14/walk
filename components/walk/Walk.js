@@ -8,7 +8,6 @@ import {
   TouchableHighlight
 } from 'react-native';
 
-import Something from '../Something';
 import Component2 from '../Component2';
 
 import styles from './styles/walkStyles.js'
@@ -35,8 +34,6 @@ export default class Walk extends Component {
           Press Cmd+R to reload,{'\n'}
           Cmd+D or shake for dev menu
         </Text>
-        <Component2 />
-        <Something />
       </View>
     );
   }

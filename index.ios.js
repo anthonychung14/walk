@@ -17,12 +17,13 @@ import {
 import Something from './components/Something';
 import Component2 from './components/Component2';
 import Walk from './components/walk/Walk';
+import HealthKit from './components/HealthKit';
 
 class App extends Component {
   onRightButtonPress = () => {
       this.refs.nav.push({
         title: 'From Right',
-        component: Something
+        component: HealthKit
       });
   };
 
@@ -39,7 +40,7 @@ class App extends Component {
         ref="nav"
         initialRoute={{
           component: Walk,
-          title: 'Go Home!',
+          title: 'Home',
           leftButtonTitle: 'Go Left',
           onLeftButtonPress: this.onLeftButtonPress,
           rightButtonTitle: 'Go Right',
@@ -50,24 +51,5 @@ class App extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
 
 AppRegistry.registerComponent('Walk', () => App);
