@@ -41,7 +41,8 @@ export default class HealthKit extends Component {
       fetchedStepsHistory: false,
       stepsToday: 0,
       stepHistory: [],
-      error: null
+      range: 7,
+      averageOverRange: null
     };
   }
 
@@ -71,9 +72,11 @@ export default class HealthKit extends Component {
     });
   }
 
-  _fetchStepsHistory = () => {
+  _fetchStepsHistory() {
+    const currentDate = new Date();
+    currentDate.setDate(currentDate.getDate() - this.state.range);
     let options = {
-      startDate: (new Date(2016, 8, 3).toISOString())
+      startDate: currentDate.toISOString(),
     };
     AppleHealthKit.getDailyStepCountSamples(options, (err, res) => {
       if (this._handleHKError(err, 'getDailyStepCountSamples')) {
@@ -81,10 +84,11 @@ export default class HealthKit extends Component {
       }
       this.setState({
         stepHistory: res,
-        fetchedStepsHistory: true
+        fetchedStepsHistory: true,
+        averageOverRange: Math.floor(this._calculateAvgFromResponse(res))
       });
     });
-  }
+   }
 
   _handleHKError = (err, method) => {
     if (err) {
@@ -94,6 +98,12 @@ export default class HealthKit extends Component {
       return true;
     }
     return false;
+  }
+
+  _calculateAvgFromResponse(response) {
+     return response.reduce((sum, day) => {
+       return sum + day.value;
+     }, 0) / this.state.range;
   }
 
   render() {
@@ -114,7 +124,7 @@ export default class HealthKit extends Component {
               source={require('../assets/gif/ripple.gif')}
             /> :
             <Text>
-              { `stepsToday: ${JSON.stringify(this.state.stepHistory)}` }
+              { `average over ${this.state.range} days: ${this.state.averageOverRange}` }
             </Text>
           }
         </View>

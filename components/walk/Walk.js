@@ -11,7 +11,7 @@ import {
 import Component2 from '../Component2';
 
 import styles from './styles/walkStyles.js'
-
+console.log('testing??!?!?!');
 export default class Walk extends Component {
   render() {
     return (
@@ -25,7 +25,7 @@ export default class Walk extends Component {
           <Text>Touch me</Text>
         </TouchableHighlight>
         <Text style={ styles.welcome }>
-          Welcome to React Native!
+          Welcome to React!
         </Text>
         <Text style={ styles.instructions }>
           To get started, edit index.ios.js
